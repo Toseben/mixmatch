@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --progress --colors --hot --config ./webpack.config.js",
+    "start": "webpack-dev-server --progress --colors --hot --config ./webpack.config.js --host 0.0.0.0 --public 192.168.1.109:8080",
     "build": "webpack --hot --config ./webpack.config.js"
   },
   "author": "",
@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "aframe": "^0.6.0",
+    "aframe-orbit-controls-component-2": "^0.1.8",
     "aframe-react": "^4.3.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
