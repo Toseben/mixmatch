@@ -2,7 +2,10 @@ module.exports = {
   "parser": 'babel-eslint',
   "env": {
     "browser": true,
-    "es6": true
+    "commonjs": true,
+    "es6": true,
+    "node": true
   },
-  "extends": "airbnb"
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "plugins": [ "react" ]
 };
