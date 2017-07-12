@@ -7,11 +7,26 @@ module.exports = {
     './src/index.jsx',
   ],
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'react-hot-loader!babel-loader',
-    }],
+    loaders: [
+      {
+        // JavaScript
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: [
+          { loader: 'react-hot-loader' },
+          { loader: 'babel-loader' },
+        ],
+      },
+      {
+        // CSS
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader', options: { url: false } },
+        ],
+      },
+    ],
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
