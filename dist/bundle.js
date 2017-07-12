@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4a02c58f603ccefcfde7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "853cc94df81759f2c559"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -32546,6 +32546,11 @@ var App = function (_Component) {
               'p',
               { className: 'text-center' },
               title
+            ),
+            _react2.default.createElement(
+              'button',
+              { type: 'submit', 'class': 'btn btn-default' },
+              'Submit'
             )
           )
         ),
