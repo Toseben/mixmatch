@@ -9,6 +9,9 @@ class App extends Component {
   rotateTo = (e) => {
     var position = e.target.dataset.pos;
     document.querySelector('#camera').setAttribute('orbit-controls', 'rotateTo', position);
+
+    // Button doesn't work occasionally
+    console.log(position)
   }
 
   render() {
