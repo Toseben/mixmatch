@@ -19,7 +19,7 @@ class App extends Component {
       <div className="container-fluid">
         <div className="row ui">
           <div className="col-md-12 text-center">
-            <p>{title}</p>
+            <p className="noselect">{title}</p>
             <button className="btn btn-default" onClick={(e) => this.rotateTo(e)} data-pos="-1 0 0">Left</button>
             <button className="btn btn-default" onClick={(e) => this.rotateTo(e)} data-pos="0 0 1">Front</button>
             <button className="btn btn-default" onClick={(e) => this.rotateTo(e)} data-pos="1 0 0">Right</button>
