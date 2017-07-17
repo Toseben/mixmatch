@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a52e776f08e94bbae475"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "529b31f7f774e6d4f805"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -32746,7 +32746,13 @@ var AFrame = function (_Component) {
             'animation__scale-up': 'property: scale; dur: 500; to: 1 1 1; startEvents: scale-up',
             'animation__scale-down': 'property: scale; dur: 500; to: 0.01 0.01 0.01; startEvents: scale-down' }),
           _react2.default.createElement('a-mixin', { id: 'geometry',
-            geometry: 'primitive: box; depth: 0.9; height: 0.9; width: 0.9' })
+            geometry: 'primitive: box; depth: 0.9; height: 0.9; width: 0.9' }),
+          _react2.default.createElement('a-asset-item', { id: 'bottom-obj', src: './geo/bottom_v002.obj' }),
+          _react2.default.createElement('a-asset-item', { id: 'middle-obj', src: './geo/middle_v002.obj' }),
+          _react2.default.createElement('a-asset-item', { id: 'top-obj', src: './geo/top_v002.obj' }),
+          _react2.default.createElement('img', { id: 'img-a', src: './geo/geo_A.jpg' }),
+          _react2.default.createElement('img', { id: 'img-b', src: './geo/geo_B.jpg' }),
+          _react2.default.createElement('img', { id: 'img-c', src: './geo/geo_C.jpg' })
         ),
         _react2.default.createElement(_aframeReact.Entity, { id: 'target', position: '0 0 -3' }),
         _react2.default.createElement(
@@ -32755,40 +32761,40 @@ var AFrame = function (_Component) {
           _react2.default.createElement(
             _aframeReact.Entity,
             { id: 'bottom-row' },
-            _react2.default.createElement(_aframeReact.Entity, { id: 'bottom-0', className: 'bottom', position: { x: 0, y: -1, z: 0 },
-              material: { color: '#F77' }, mixin: 'geometry spin scale',
+            _react2.default.createElement(_aframeReact.Entity, { id: 'bottom-0', className: 'bottom', 'obj-model': 'obj: #bottom-obj',
+              material: { color: '#F77', side: 'double', src: '#img-a' }, mixin: 'spin scale',
               selected: { enabled: this.state.bottom === 0 } }),
-            _react2.default.createElement(_aframeReact.Entity, { id: 'bottom-1', className: 'bottom', position: { x: 0, y: -1, z: 0 },
-              material: { color: '#7F7' }, mixin: 'geometry spin scale',
+            _react2.default.createElement(_aframeReact.Entity, { id: 'bottom-1', className: 'bottom', 'obj-model': 'obj: #bottom-obj',
+              material: { color: '#7F7', side: 'double', src: '#img-b' }, mixin: 'spin scale',
               selected: { enabled: this.state.bottom === 1 } }),
-            _react2.default.createElement(_aframeReact.Entity, { id: 'bottom-2', className: 'bottom', position: { x: 0, y: -1, z: 0 },
-              material: { color: '#77F' }, mixin: 'geometry spin scale',
+            _react2.default.createElement(_aframeReact.Entity, { id: 'bottom-2', className: 'bottom', 'obj-model': 'obj: #bottom-obj',
+              material: { color: '#77F', side: 'double', src: '#img-c' }, mixin: 'spin scale',
               selected: { enabled: this.state.bottom === 2 } })
           ),
           _react2.default.createElement(
             _aframeReact.Entity,
             { id: 'middle-row' },
-            _react2.default.createElement(_aframeReact.Entity, { id: 'middle-0', className: 'middle', position: { x: 0, y: 0, z: 0 },
-              material: { color: '#F77' }, mixin: 'geometry spin scale',
+            _react2.default.createElement(_aframeReact.Entity, { id: 'middle-0', className: 'middle', 'obj-model': 'obj: #middle-obj',
+              material: { color: '#F77', side: 'double', src: '#img-a' }, mixin: 'spin scale',
               selected: { enabled: this.state.middle === 0 } }),
-            _react2.default.createElement(_aframeReact.Entity, { id: 'middle-1', className: 'middle', position: { x: 0, y: 0, z: 0 },
-              material: { color: '#7F7' }, mixin: 'geometry spin scale',
+            _react2.default.createElement(_aframeReact.Entity, { id: 'middle-1', className: 'middle', 'obj-model': 'obj: #middle-obj',
+              material: { color: '#7F7', side: 'double', src: '#img-b' }, mixin: 'spin scale',
               selected: { enabled: this.state.middle === 1 } }),
-            _react2.default.createElement(_aframeReact.Entity, { id: 'middle-2', className: 'middle', position: { x: 0, y: 0, z: 0 },
-              material: { color: '#77F' }, mixin: 'geometry spin scale',
+            _react2.default.createElement(_aframeReact.Entity, { id: 'middle-2', className: 'middle', 'obj-model': 'obj: #middle-obj',
+              material: { color: '#77F', side: 'double', src: '#img-c' }, mixin: 'spin scale',
               selected: { enabled: this.state.middle === 2 } })
           ),
           _react2.default.createElement(
             _aframeReact.Entity,
             { id: 'top-row' },
-            _react2.default.createElement(_aframeReact.Entity, { id: 'top-0', className: 'top', position: { x: 0, y: 1, z: 0 },
-              material: { color: '#F77' }, mixin: 'geometry spin scale',
+            _react2.default.createElement(_aframeReact.Entity, { id: 'top-0', className: 'top', 'obj-model': 'obj: #top-obj',
+              material: { color: '#F77', side: 'double', src: '#img-a' }, mixin: 'spin scale',
               selected: { enabled: this.state.top === 0 } }),
-            _react2.default.createElement(_aframeReact.Entity, { id: 'top-1', className: 'top', position: { x: 0, y: 1, z: 0 },
-              material: { color: '#7F7' }, mixin: 'geometry spin scale',
+            _react2.default.createElement(_aframeReact.Entity, { id: 'top-1', className: 'top', 'obj-model': 'obj: #top-obj',
+              material: { color: '#7F7', side: 'double', src: '#img-b' }, mixin: 'spin scale',
               selected: { enabled: this.state.top === 1 } }),
-            _react2.default.createElement(_aframeReact.Entity, { id: 'top-2', className: 'top', position: { x: 0, y: 1, z: 0 },
-              material: { color: '#77F' }, mixin: 'geometry spin scale',
+            _react2.default.createElement(_aframeReact.Entity, { id: 'top-2', className: 'top', 'obj-model': 'obj: #top-obj',
+              material: { color: '#77F', side: 'double', src: '#img-c' }, mixin: 'spin scale',
               selected: { enabled: this.state.top === 2 } })
           )
         ),

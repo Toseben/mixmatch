@@ -99,55 +99,62 @@ class AFrame extends Component {
           <a-mixin id="geometry"
             geometry="primitive: box; depth: 0.9; height: 0.9; width: 0.9">
           </a-mixin>
+          <a-asset-item id="bottom-obj" src="./geo/bottom_v002.obj"></a-asset-item>
+          <a-asset-item id="middle-obj" src="./geo/middle_v002.obj"></a-asset-item>
+          <a-asset-item id="top-obj" src="./geo/top_v002.obj"></a-asset-item>
+          <img id="img-a" src="./geo/geo_A.jpg"></img>
+          <img id="img-b" src="./geo/geo_B.jpg"></img>
+          <img id="img-c"src="./geo/geo_C.jpg"></img>
         </a-assets>
+
 
         {/* CURRENTLY CLASS NOT CLASSNAME */}
         <Entity id="target" position="0 0 -3"></Entity>
         <Entity id="rows" position="0 0 -3">
           {/* BOTTOM */}
           <Entity id="bottom-row">
-            <Entity id="bottom-0" className="bottom" position={{x: 0, y: -1, z: 0}}
-              material={{color: '#F77'}} mixin="geometry spin scale"
+            <Entity id="bottom-0" className="bottom" obj-model="obj: #bottom-obj"
+              material={{color: '#F77', side: 'double', src: '#img-a'}} mixin="spin scale"
               selected={{enabled: this.state.bottom === 0}}>
             </Entity>
-            <Entity id="bottom-1" className="bottom" position={{x: 0, y: -1, z: 0}}
-              material={{color: '#7F7'}} mixin="geometry spin scale"
+            <Entity id="bottom-1" className="bottom" obj-model="obj: #bottom-obj"
+              material={{color: '#7F7', side: 'double', src: '#img-b'}} mixin="spin scale"
               selected={{enabled: this.state.bottom === 1}}>
             </Entity>
-            <Entity id="bottom-2" className="bottom" position={{x: 0, y: -1, z: 0}}
-              material={{color: '#77F'}} mixin="geometry spin scale"
+            <Entity id="bottom-2" className="bottom" obj-model="obj: #bottom-obj"
+              material={{color: '#77F', side: 'double', src: '#img-c'}} mixin="spin scale"
               selected={{enabled: this.state.bottom === 2}}>
             </Entity>
           </Entity>
 
           {/* MIDDLE */}
           <Entity id="middle-row">
-            <Entity id="middle-0" className="middle" position={{x: 0, y: 0, z: 0}}
-              material={{color: '#F77'}} mixin="geometry spin scale"
+            <Entity id="middle-0" className="middle" obj-model="obj: #middle-obj"
+              material={{color: '#F77', side: 'double', src: '#img-a'}} mixin="spin scale"
               selected={{enabled: this.state.middle === 0}}>
             </Entity>
-            <Entity id="middle-1" className="middle" position={{x: 0, y: 0, z: 0}}
-              material={{color: '#7F7'}} mixin="geometry spin scale"
+            <Entity id="middle-1" className="middle" obj-model="obj: #middle-obj"
+              material={{color: '#7F7', side: 'double', src: '#img-b'}} mixin="spin scale"
               selected={{enabled: this.state.middle === 1}}>
             </Entity>
-            <Entity id="middle-2" className="middle" position={{x: 0, y: 0, z: 0}}
-              material={{color: '#77F'}} mixin="geometry spin scale"
+            <Entity id="middle-2" className="middle" obj-model="obj: #middle-obj"
+              material={{color: '#77F', side: 'double', src: '#img-c'}} mixin="spin scale"
               selected={{enabled: this.state.middle === 2}}>
             </Entity>
           </Entity>
 
           {/* TOP */}
           <Entity id="top-row">
-            <Entity id="top-0" className="top" position={{x: 0, y: 1, z: 0}}
-              material={{color: '#F77'}} mixin="geometry spin scale"
+            <Entity id="top-0" className="top" obj-model="obj: #top-obj"
+              material={{color: '#F77', side: 'double', src: '#img-a'}} mixin="spin scale"
               selected={{enabled: this.state.top === 0}}>
             </Entity>
-            <Entity id="top-1" className="top" position={{x: 0, y: 1, z: 0}}
-              material={{color: '#7F7'}} mixin="geometry spin scale"
+            <Entity id="top-1" className="top" obj-model="obj: #top-obj"
+              material={{color: '#7F7', side: 'double', src: '#img-b'}} mixin="spin scale"
               selected={{enabled: this.state.top === 1}}>
             </Entity>
-            <Entity id="top-2" className="top" position={{x: 0, y: 1, z: 0}}
-              material={{color: '#77F'}} mixin="geometry spin scale"
+            <Entity id="top-2" className="top" obj-model="obj: #top-obj"
+              material={{color: '#77F', side: 'double', src: '#img-c'}} mixin="spin scale"
               selected={{enabled: this.state.top === 2}}>
             </Entity>
           </Entity>
