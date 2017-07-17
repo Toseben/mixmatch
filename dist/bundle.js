@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "529b31f7f774e6d4f805"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c196f6e48dd9a28e3c7b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -9904,7 +9904,7 @@ exports = module.exports = __webpack_require__(294)(undefined);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);", ""]);
 
 // module
-exports.push([module.i, "*{padding:0;margin:0;box-sizing:border-box;font-size:32px;letter-spacing:2px;font-family:'Lato', sans-serif}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ui{position:relative;z-index:1}.aframe-container{position:absolute;top:0;left:0}\n", ""]);
+exports.push([module.i, "*{padding:0;margin:0;box-sizing:border-box;font-size:32px;letter-spacing:2px;font-family:'Lato', sans-serif}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ui{position:relative;z-index:1}.aframe-container{position:absolute;top:0;left:0}.hamburger{margin:16px;position:relative;z-index:2}.hamburger .line{width:40px;height:6px;background-color:#000;margin:5px 0;transition:0.4s}.hamburger.active .one{-webkit-transform:rotate(-45deg) translate(-9px, 6px);transform:rotate(-45deg) translate(-9px, 6px)}.hamburger.active .two{opacity:0}.hamburger.active .three{-webkit-transform:rotate(45deg) translate(-8px, -8px);transform:rotate(45deg) translate(-8px, -8px)}\n", ""]);
 
 // exports
 
@@ -32524,37 +32524,50 @@ var title = 'Minimal React Babel';
 var App = function (_Component) {
   _inherits(App, _Component);
 
-  function App() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
+  function App(props) {
     _classCallCheck(this, App);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.rotateTo = function (e) {
+    _this.rotateTo = function (e) {
       var position = e.target.dataset.pos;
       document.querySelector('#camera').setAttribute('orbit-controls', 'rotateTo', position);
+    };
 
-      // Button doesn't work occasionally
-      console.log(position);
-    }, _temp), _possibleConstructorReturn(_this, _ret);
+    _this.state = {
+      uiActive: false
+    };
+    return _this;
   }
 
   // FUNCTIONS
 
 
   _createClass(App, [{
+    key: 'uiActiveToggle',
+    value: function uiActiveToggle() {
+      this.setState({ uiActive: !this.state.uiActive });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
+      var hamburger = 'hamburger ' + (this.state.uiActive ? 'active' : null);
+
       return _react2.default.createElement(
         'div',
         { className: 'container-fluid' },
+        _react2.default.createElement(
+          'div',
+          { className: hamburger, onClick: function onClick() {
+              return _this2.uiActiveToggle();
+            },
+            'data-toggle': 'modal', 'data-target': '.modal-ui' },
+          _react2.default.createElement('div', { className: 'line one' }),
+          _react2.default.createElement('div', { className: 'line two' }),
+          _react2.default.createElement('div', { className: 'line three' })
+        ),
         _react2.default.createElement(
           'div',
           { className: 'row ui' },
@@ -32586,6 +32599,38 @@ var App = function (_Component) {
                   return _this2.rotateTo(e);
                 }, 'data-pos': '1 0 0' },
               'Right'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'modal fade modal-ui', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myLargeModalLabel' },
+          _react2.default.createElement(
+            'div',
+            { className: 'modal-dialog modal-lg', role: 'document' },
+            _react2.default.createElement(
+              'div',
+              { className: 'modal-content text-center' },
+              _react2.default.createElement(
+                'p',
+                { className: 'noselect' },
+                title
+              ),
+              _react2.default.createElement(
+                'p',
+                { className: 'noselect' },
+                title
+              ),
+              _react2.default.createElement(
+                'p',
+                { className: 'noselect' },
+                title
+              ),
+              _react2.default.createElement(
+                'p',
+                { className: 'noselect' },
+                title
+              )
             )
           )
         ),
