@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "d920931441d72e0c5c1b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a52e776f08e94bbae475"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -9904,7 +9904,7 @@ exports = module.exports = __webpack_require__(294)(undefined);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);", ""]);
 
 // module
-exports.push([module.i, "*{padding:0;margin:0;box-sizing:border-box;font-size:32px;letter-spacing:2px;font-family:'Lato', sans-serif}.ui{position:relative;z-index:1}.aframe-container{position:absolute;top:0;left:0}\n", ""]);
+exports.push([module.i, "*{padding:0;margin:0;box-sizing:border-box;font-size:32px;letter-spacing:2px;font-family:'Lato', sans-serif}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ui{position:relative;z-index:1}.aframe-container{position:absolute;top:0;left:0}\n", ""]);
 
 // exports
 
@@ -32563,7 +32563,7 @@ var App = function (_Component) {
             { className: 'col-md-12 text-center' },
             _react2.default.createElement(
               'p',
-              null,
+              { className: 'noselect' },
               title
             ),
             _react2.default.createElement(
@@ -32644,31 +32644,93 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-_aframe2.default.registerComponent('event-proxy', {
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+_aframe2.default.registerComponent('geo-selector', {
   schema: {
     listen: { default: '' },
-    target: { type: 'selector' },
+    target: { default: '' },
     emit: { default: '' }
   },
 
   update: function update() {
     var data = this.data;
     this.el.addEventListener(data.listen, function () {
-      data.target.emit(data.emit);
+
+      // TRIGGER REACT STATE UPDATE FROM HERE
+      var direction = data.emit === "arrow-left" ? -1 : 1;
+      var number = AFrameComponent.state[data.target] + direction;
+
+      // CLAMP VALUES
+      if (number < 0) {
+        number = 2;
+      }
+      number = number % 3;
+
+      // SET STATE
+      AFrameComponent.setState(_defineProperty({}, data.target, number));
     });
   }
 });
 
+_aframe2.default.registerComponent('selected', {
+  schema: {
+    enabled: { default: '' }
+  },
+
+  update: function update() {
+    var enabled = this.data.enabled;
+
+    // CHECK INIT
+    if (enabled) {
+      this.el.emit('scale-up');
+      this.el.emit('spin-right');
+    } else {
+      this.el.emit('scale-down');
+      this.el.emit('spin-left');
+    }
+  }
+});
+
+_aframe2.default.registerComponent('follow-camera', {
+
+  init: function init() {
+    this.camera = document.getElementById('camera');
+  },
+
+  tick: function tick() {
+    var camRot = this.camera.getAttribute('rotation');
+    this.el.setAttribute('rotation', { y: camRot.y });
+  }
+});
+
+var AFrameComponent;
+
 var AFrame = function (_Component) {
   _inherits(AFrame, _Component);
 
-  function AFrame() {
+  function AFrame(props) {
     _classCallCheck(this, AFrame);
 
-    return _possibleConstructorReturn(this, (AFrame.__proto__ || Object.getPrototypeOf(AFrame)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (AFrame.__proto__ || Object.getPrototypeOf(AFrame)).call(this, props));
+
+    _this.state = {
+      bottom: 0,
+      middle: 0,
+      top: 0
+    };
+    return _this;
   }
 
+  // BIND COMPONENT TEMPORARY
+
+
   _createClass(AFrame, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      AFrameComponent = this;
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -32679,35 +32741,85 @@ var AFrame = function (_Component) {
           null,
           _react2.default.createElement('a-mixin', { id: 'spin',
             'animation__left-spin': 'property: rotation; dur: 500; to: 0 0 0; startEvents: spin-left',
-            'animation__right-spin': 'property: rotation; dur: 500; to: 0 360 0; startEvents: spin-right' })
+            'animation__right-spin': 'property: rotation; dur: 500; to: 0 360 0; startEvents: spin-right' }),
+          _react2.default.createElement('a-mixin', { id: 'scale',
+            'animation__scale-up': 'property: scale; dur: 500; to: 1 1 1; startEvents: scale-up',
+            'animation__scale-down': 'property: scale; dur: 500; to: 0.01 0.01 0.01; startEvents: scale-down' }),
+          _react2.default.createElement('a-mixin', { id: 'geometry',
+            geometry: 'primitive: box; depth: 0.9; height: 0.9; width: 0.9' })
         ),
+        _react2.default.createElement(_aframeReact.Entity, { id: 'target', position: '0 0 -3' }),
         _react2.default.createElement(
-          'a-entity',
-          { id: 'camera', camera: true,
-            position: '0 0 3', 'mouse-cursor': true,
-            'orbit-controls': ' target: #target; enableDamping: true; dampingFactor: 0.125; minPolarAngle: 0.5; maxPolarAngle: 2.64; minDistance: 1.5; maxDistance: 3; rotateSpeed: 0.15; rotateToSpeed: 0.05; logPosition: false; ' },
-          _react2.default.createElement('a-sphere', { position: '-1.25 -1 -3', radius: '0.1', color: '#7F7',
-            'event-proxy': 'listen: click; target: #bottom-GEO; emit: spin-left' }),
-          _react2.default.createElement('a-sphere', { position: '1.25 -1 -3', radius: '0.1', color: '#7F7',
-            'event-proxy': 'listen: click; target: #bottom-GEO; emit: spin-right' }),
-          _react2.default.createElement('a-sphere', { position: '-1.25 0 -3', radius: '0.1', color: '#7F7',
-            'event-proxy': 'listen: click; target: #middle-GEO; emit: spin-left' }),
-          _react2.default.createElement('a-sphere', { position: '1.25 0 -3', radius: '0.1', color: '#7F7',
-            'event-proxy': 'listen: click; target: #middle-GEO; emit: spin-right' }),
-          _react2.default.createElement('a-sphere', { position: '-1.25 1 -3', radius: '0.1', color: '#7F7',
-            'event-proxy': 'listen: click; target: #top-GEO; emit: spin-left' }),
-          _react2.default.createElement('a-sphere', { position: '1.25 1 -3', radius: '0.1', color: '#7F7',
-            'event-proxy': 'listen: click; target: #top-GEO; emit: spin-right' })
+          _aframeReact.Entity,
+          { id: 'rows', position: '0 0 -3' },
+          _react2.default.createElement(
+            _aframeReact.Entity,
+            { id: 'bottom-row' },
+            _react2.default.createElement(_aframeReact.Entity, { id: 'bottom-0', className: 'bottom', position: { x: 0, y: -1, z: 0 },
+              material: { color: '#F77' }, mixin: 'geometry spin scale',
+              selected: { enabled: this.state.bottom === 0 } }),
+            _react2.default.createElement(_aframeReact.Entity, { id: 'bottom-1', className: 'bottom', position: { x: 0, y: -1, z: 0 },
+              material: { color: '#7F7' }, mixin: 'geometry spin scale',
+              selected: { enabled: this.state.bottom === 1 } }),
+            _react2.default.createElement(_aframeReact.Entity, { id: 'bottom-2', className: 'bottom', position: { x: 0, y: -1, z: 0 },
+              material: { color: '#77F' }, mixin: 'geometry spin scale',
+              selected: { enabled: this.state.bottom === 2 } })
+          ),
+          _react2.default.createElement(
+            _aframeReact.Entity,
+            { id: 'middle-row' },
+            _react2.default.createElement(_aframeReact.Entity, { id: 'middle-0', className: 'middle', position: { x: 0, y: 0, z: 0 },
+              material: { color: '#F77' }, mixin: 'geometry spin scale',
+              selected: { enabled: this.state.middle === 0 } }),
+            _react2.default.createElement(_aframeReact.Entity, { id: 'middle-1', className: 'middle', position: { x: 0, y: 0, z: 0 },
+              material: { color: '#7F7' }, mixin: 'geometry spin scale',
+              selected: { enabled: this.state.middle === 1 } }),
+            _react2.default.createElement(_aframeReact.Entity, { id: 'middle-2', className: 'middle', position: { x: 0, y: 0, z: 0 },
+              material: { color: '#77F' }, mixin: 'geometry spin scale',
+              selected: { enabled: this.state.middle === 2 } })
+          ),
+          _react2.default.createElement(
+            _aframeReact.Entity,
+            { id: 'top-row' },
+            _react2.default.createElement(_aframeReact.Entity, { id: 'top-0', className: 'top', position: { x: 0, y: 1, z: 0 },
+              material: { color: '#F77' }, mixin: 'geometry spin scale',
+              selected: { enabled: this.state.top === 0 } }),
+            _react2.default.createElement(_aframeReact.Entity, { id: 'top-1', className: 'top', position: { x: 0, y: 1, z: 0 },
+              material: { color: '#7F7' }, mixin: 'geometry spin scale',
+              selected: { enabled: this.state.top === 1 } }),
+            _react2.default.createElement(_aframeReact.Entity, { id: 'top-2', className: 'top', position: { x: 0, y: 1, z: 0 },
+              material: { color: '#77F' }, mixin: 'geometry spin scale',
+              selected: { enabled: this.state.top === 2 } })
+          )
         ),
         _react2.default.createElement(
           _aframeReact.Entity,
-          { id: 'target' },
-          _react2.default.createElement('a-box', { id: 'bottom-GEO', position: '0 -1 0', mixin: 'spin',
-            depth: '0.9', height: '0.9', width: '0.9', color: '#F77' }),
-          _react2.default.createElement('a-box', { id: 'middle-GEO', position: '0 0 0', mixin: 'spin',
-            depth: '0.9', height: '0.9', width: '0.9', color: '#F77' }),
-          _react2.default.createElement('a-box', { id: 'top-GEO', position: '0 1 0', mixin: 'spin',
-            depth: '0.9', height: '0.9', width: '0.9', color: '#F77' })
+          { id: 'camera', camera: true, 'mouse-cursor': true,
+            'orbit-controls': ' target: #target; enableDamping: true; enablePan: false; enableZoom: false; dampingFactor: 0.125; minPolarAngle: 0.5; maxPolarAngle: 2.64; rotateSpeed: 0.15; rotateToSpeed: 0.05; logPosition: false; ' },
+          _react2.default.createElement('a-entity', { light: 'type: ambient; color: #BBB' }),
+          _react2.default.createElement('a-entity', { light: 'type: directional; color: #FFF; intensity: 0.6', position: '-0.5 1 1' })
+        ),
+        _react2.default.createElement(
+          _aframeReact.Entity,
+          { position: '0 0 -3', 'follow-camera': true },
+          _react2.default.createElement(_aframeReact.Entity, { geometry: { primitive: 'sphere', radius: 0.1 },
+            position: '-1.25 -1 0', material: { color: '#444' },
+            'geo-selector': 'listen: click; target: bottom; emit: arrow-left' }),
+          _react2.default.createElement(_aframeReact.Entity, { geometry: { primitive: 'sphere', radius: 0.1 },
+            position: '1.25 -1 0', material: { color: '#444' },
+            'geo-selector': 'listen: click; target: bottom; emit: arrow-right' }),
+          _react2.default.createElement(_aframeReact.Entity, { geometry: { primitive: 'sphere', radius: 0.1 },
+            position: '-1.25 0 0', material: { color: '#444' },
+            'geo-selector': 'listen: click; target: middle; emit: arrow-left' }),
+          _react2.default.createElement(_aframeReact.Entity, { geometry: { primitive: 'sphere', radius: 0.1 },
+            position: '1.25 0 0', material: { color: '#444' },
+            'geo-selector': 'listen: click; target: middle; emit: arrow-right' }),
+          _react2.default.createElement(_aframeReact.Entity, { geometry: { primitive: 'sphere', radius: 0.1 },
+            position: '-1.25 1 0', material: { color: '#444' },
+            'geo-selector': 'listen: click; target: top; emit: arrow-left' }),
+          _react2.default.createElement(_aframeReact.Entity, { geometry: { primitive: 'sphere', radius: 0.1 },
+            position: '1.25 1 0', material: { color: '#444' },
+            'geo-selector': 'listen: click; target: top; emit: arrow-right' })
         ),
         _react2.default.createElement('a-sky', { color: '#EEE' })
       );

@@ -52,6 +52,18 @@ AFRAME.registerComponent('selected', {
   }
 });
 
+AFRAME.registerComponent('follow-camera', {
+
+  init: function() {
+    this.camera = document.getElementById('camera');
+  },
+
+  tick: function() {
+    var camRot = this.camera.getAttribute('rotation');
+    this.el.setAttribute('rotation', {y: camRot.y});
+  }
+});
+
 var AFrameComponent;
 
 class AFrame extends Component {
@@ -84,6 +96,9 @@ class AFrame extends Component {
             animation__scale-up="property: scale; dur: 500; to: 1 1 1; startEvents: scale-up"
             animation__scale-down="property: scale; dur: 500; to: 0.01 0.01 0.01; startEvents: scale-down">
           </a-mixin>
+          <a-mixin id="geometry"
+            geometry="primitive: box; depth: 0.9; height: 0.9; width: 0.9">
+          </a-mixin>
         </a-assets>
 
         {/* CURRENTLY CLASS NOT CLASSNAME */}
@@ -92,18 +107,15 @@ class AFrame extends Component {
           {/* BOTTOM */}
           <Entity id="bottom-row">
             <Entity id="bottom-0" className="bottom" position={{x: 0, y: -1, z: 0}}
-              geometry={{primitive: 'box', depth: 0.9, height: 0.9, width: 0.9}}
-              material={{color: '#F77'}} mixin="spin scale"
+              material={{color: '#F77'}} mixin="geometry spin scale"
               selected={{enabled: this.state.bottom === 0}}>
             </Entity>
             <Entity id="bottom-1" className="bottom" position={{x: 0, y: -1, z: 0}}
-              geometry={{primitive: 'box', depth: 0.9, height: 0.9, width: 0.9}}
-              material={{color: '#7F7'}} mixin="spin scale"
+              material={{color: '#7F7'}} mixin="geometry spin scale"
               selected={{enabled: this.state.bottom === 1}}>
             </Entity>
             <Entity id="bottom-2" className="bottom" position={{x: 0, y: -1, z: 0}}
-              geometry={{primitive: 'box', depth: 0.9, height: 0.9, width: 0.9}}
-              material={{color: '#77F'}} mixin="spin scale"
+              material={{color: '#77F'}} mixin="geometry spin scale"
               selected={{enabled: this.state.bottom === 2}}>
             </Entity>
           </Entity>
@@ -111,18 +123,15 @@ class AFrame extends Component {
           {/* MIDDLE */}
           <Entity id="middle-row">
             <Entity id="middle-0" className="middle" position={{x: 0, y: 0, z: 0}}
-              geometry={{primitive: 'box', depth: 0.9, height: 0.9, width: 0.9}}
-              material={{color: '#F77'}} mixin="spin scale"
+              material={{color: '#F77'}} mixin="geometry spin scale"
               selected={{enabled: this.state.middle === 0}}>
             </Entity>
             <Entity id="middle-1" className="middle" position={{x: 0, y: 0, z: 0}}
-              geometry={{primitive: 'box', depth: 0.9, height: 0.9, width: 0.9}}
-              material={{color: '#7F7'}} mixin="spin scale"
+              material={{color: '#7F7'}} mixin="geometry spin scale"
               selected={{enabled: this.state.middle === 1}}>
             </Entity>
             <Entity id="middle-2" className="middle" position={{x: 0, y: 0, z: 0}}
-              geometry={{primitive: 'box', depth: 0.9, height: 0.9, width: 0.9}}
-              material={{color: '#77F'}} mixin="spin scale"
+              material={{color: '#77F'}} mixin="geometry spin scale"
               selected={{enabled: this.state.middle === 2}}>
             </Entity>
           </Entity>
@@ -130,18 +139,15 @@ class AFrame extends Component {
           {/* TOP */}
           <Entity id="top-row">
             <Entity id="top-0" className="top" position={{x: 0, y: 1, z: 0}}
-              geometry={{primitive: 'box', depth: 0.9, height: 0.9, width: 0.9}}
-              material={{color: '#F77'}} mixin="spin scale"
+              material={{color: '#F77'}} mixin="geometry spin scale"
               selected={{enabled: this.state.top === 0}}>
             </Entity>
             <Entity id="top-1" className="top" position={{x: 0, y: 1, z: 0}}
-              geometry={{primitive: 'box', depth: 0.9, height: 0.9, width: 0.9}}
-              material={{color: '#7F7'}} mixin="spin scale"
+              material={{color: '#7F7'}} mixin="geometry spin scale"
               selected={{enabled: this.state.top === 1}}>
             </Entity>
             <Entity id="top-2" className="top" position={{x: 0, y: 1, z: 0}}
-              geometry={{primitive: 'box', depth: 0.9, height: 0.9, width: 0.9}}
-              material={{color: '#77F'}} mixin="spin scale"
+              material={{color: '#77F'}} mixin="geometry spin scale"
               selected={{enabled: this.state.top === 2}}>
             </Entity>
           </Entity>
@@ -161,9 +167,11 @@ class AFrame extends Component {
             rotateToSpeed: 0.05;
             logPosition: false;
             ">
+            <a-entity light="type: ambient; color: #BBB"></a-entity>
+            <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
         </Entity>
 
-        <Entity position="0 0 -3">
+        <Entity position="0 0 -3" follow-camera>
 
           {/* BOTTOM */}
           <Entity geometry={{primitive: 'sphere', radius: 0.1}}
