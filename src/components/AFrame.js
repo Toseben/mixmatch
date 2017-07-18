@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { setGeometry } from '../redux/actions'
 
 import AFRAME from 'aframe'
 import { Scene, Entity } from 'aframe-react'
@@ -6,6 +9,10 @@ import { Scene, Entity } from 'aframe-react'
 import 'aframe-orbit-controls-component-2'
 import 'aframe-animation-component'
 import 'aframe-mouse-cursor-component'
+
+// REDUCERS AND STATE FOR COMPONENTS
+var updateGeometry;
+var state = {bottom: 0, middle: 0, top: 0};
 
 AFRAME.registerComponent('geo-selector', {
   schema: {
@@ -20,14 +27,14 @@ AFRAME.registerComponent('geo-selector', {
 
       // TRIGGER REACT STATE UPDATE FROM HERE
       var direction = data.emit === "arrow-left" ? -1 : 1;
-      var number = AFrameComponent.state[data.target] + direction;
+      var number = state[data.target] + direction;
 
       // CLAMP VALUES
       if (number < 0) { number = 2 }
       number = number % 3;
 
       // SET STATE
-      AFrameComponent.setState({ [data.target]: number });
+      updateGeometry(data.target, number);
     });
   }
 });
@@ -64,8 +71,6 @@ AFRAME.registerComponent('follow-camera', {
   }
 });
 
-var AFrameComponent;
-
 class AFrame extends Component {
 
   constructor(props) {
@@ -77,12 +82,15 @@ class AFrame extends Component {
     }
   }
 
-  // BIND COMPONENT TEMPORARY
-  componentWillMount() {
-    AFrameComponent = this;
-  }
-
   render() {
+    // REDUCERS FOR COMPONENTS
+    updateGeometry = this.props.updateGeometry;
+
+    // STATE FOR COMPONENT
+    state.bottom = this.props.bottom;
+    state.middle = this.props.middle;
+    state.top = this.props.top;
+
     return (
       <Scene vr-mode-ui="enabled: false">
 
@@ -115,15 +123,15 @@ class AFrame extends Component {
           <Entity id="bottom-row">
             <Entity id="bottom-0" className="bottom" obj-model="obj: #bottom-obj"
               material={{color: '#F77', side: 'double', src: '#img-a'}} mixin="spin scale"
-              selected={{enabled: this.state.bottom === 0}}>
+              selected={{enabled: state.bottom === 0}}>
             </Entity>
             <Entity id="bottom-1" className="bottom" obj-model="obj: #bottom-obj"
               material={{color: '#7F7', side: 'double', src: '#img-b'}} mixin="spin scale"
-              selected={{enabled: this.state.bottom === 1}}>
+              selected={{enabled: state.bottom === 1}}>
             </Entity>
             <Entity id="bottom-2" className="bottom" obj-model="obj: #bottom-obj"
               material={{color: '#77F', side: 'double', src: '#img-c'}} mixin="spin scale"
-              selected={{enabled: this.state.bottom === 2}}>
+              selected={{enabled: state.bottom === 2}}>
             </Entity>
           </Entity>
 
@@ -131,15 +139,15 @@ class AFrame extends Component {
           <Entity id="middle-row">
             <Entity id="middle-0" className="middle" obj-model="obj: #middle-obj"
               material={{color: '#F77', side: 'double', src: '#img-a'}} mixin="spin scale"
-              selected={{enabled: this.state.middle === 0}}>
+              selected={{enabled: state.middle === 0}}>
             </Entity>
             <Entity id="middle-1" className="middle" obj-model="obj: #middle-obj"
               material={{color: '#7F7', side: 'double', src: '#img-b'}} mixin="spin scale"
-              selected={{enabled: this.state.middle === 1}}>
+              selected={{enabled: state.middle === 1}}>
             </Entity>
             <Entity id="middle-2" className="middle" obj-model="obj: #middle-obj"
               material={{color: '#77F', side: 'double', src: '#img-c'}} mixin="spin scale"
-              selected={{enabled: this.state.middle === 2}}>
+              selected={{enabled: state.middle === 2}}>
             </Entity>
           </Entity>
 
@@ -147,15 +155,15 @@ class AFrame extends Component {
           <Entity id="top-row">
             <Entity id="top-0" className="top" obj-model="obj: #top-obj"
               material={{color: '#F77', side: 'double', src: '#img-a'}} mixin="spin scale"
-              selected={{enabled: this.state.top === 0}}>
+              selected={{enabled: state.top === 0}}>
             </Entity>
             <Entity id="top-1" className="top" obj-model="obj: #top-obj"
               material={{color: '#7F7', side: 'double', src: '#img-b'}} mixin="spin scale"
-              selected={{enabled: this.state.top === 1}}>
+              selected={{enabled: state.top === 1}}>
             </Entity>
             <Entity id="top-2" className="top" obj-model="obj: #top-obj"
               material={{color: '#77F', side: 'double', src: '#img-c'}} mixin="spin scale"
-              selected={{enabled: this.state.top === 2}}>
+              selected={{enabled: state.top === 2}}>
             </Entity>
           </Entity>
 
@@ -218,4 +226,30 @@ class AFrame extends Component {
   }
 }
 
-export default AFrame
+// PROP TYPES
+AFrame.propTypes = {
+  updateGeometry: PropTypes.func.isRequired,
+  bottom: PropTypes.number.isRequired,
+  middle: PropTypes.number.isRequired,
+  top: PropTypes.number.isRequired
+}
+
+// CONNECT
+const mapStateToProps = (state) => {
+  return {
+    bottom: state.bottom,
+    middle: state.middle,
+    top: state.top
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateGeometry: (row, id) => dispatch(setGeometry(row, id))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AFrame)
