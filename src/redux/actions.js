@@ -4,3 +4,10 @@ export function setGeometry(row, id) {
     id: id
   }
 }
+
+export function setStyle(row, id) {
+  return { type: 'SET_GEOMETRY',
+    row: row,
+    id: id
+  }
+}

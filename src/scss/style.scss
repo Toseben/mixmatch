@@ -132,6 +132,9 @@ $ui-margin: 10px;
   &:hover {
     -webkit-filter: brightness(150%) saturate(0.75);
   }
+  &.selected {
+    -webkit-filter: saturate(0.25);
+  }
 }
 
 .char-style {
