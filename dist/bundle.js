@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "887087062c88bd67870f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "fe58f293cfae83f4c3a8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -10081,7 +10081,7 @@ exports = module.exports = __webpack_require__(335)(undefined);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);", ""]);
 
 // module
-exports.push([module.i, "*{outline:1px solid blue;padding:0;margin:0;box-sizing:border-box;font-size:32px;letter-spacing:2px;font-family:'Lato', sans-serif}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ui{position:relative;z-index:1}.aframe-container{position:absolute;top:0;left:0}.hamburger{margin:20px;position:absolute;z-index:10000}.hamburger .line{width:40px;height:6px;background-color:#444;margin:5px 0;transition:0.4s}.hamburger.active .one{-webkit-transform:rotate(-45deg) translate(-9px, 6px);transform:rotate(-45deg) translate(-9px, 6px)}.hamburger.active .two{opacity:0}.hamburger.active .three{-webkit-transform:rotate(45deg) translate(-8px, -8px);transform:rotate(45deg) translate(-8px, -8px)}.modal-content p{max-width:60vw;margin:0 auto}\n", ""]);
+exports.push([module.i, "*{padding:0;margin:0;box-sizing:border-box;font-family:'Lato', sans-serif}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ui{position:relative;z-index:1}.aframe-container{position:absolute;top:0;left:0}.hamburger{margin:20px;position:absolute;z-index:10000}.hamburger .line{width:40px;height:6px;background-color:#444;margin:5px 0;transition:0.4s}.hamburger.active .one{-webkit-transform:rotate(-45deg) translate(-9px, 6px);transform:rotate(-45deg) translate(-9px, 6px)}.hamburger.active .two{opacity:0}.hamburger.active .three{-webkit-transform:rotate(45deg) translate(-8px, -8px);transform:rotate(45deg) translate(-8px, -8px)}@media (min-width: 768px){.modal-content{max-width:60vh;margin:auto}}.modal-content p{max-width:60vw;margin:0 auto}.char-ui{border-top:1px solid #aaa;position:relative}.char-ui .char-name{margin-top:10px;max-width:100vw;font-size:2vh;font-weight:100;text-transform:uppercase}.name-col{padding:0}.swatch-title{display:inline-block;width:100%;font-size:1.5vh;font-weight:700;text-transform:uppercase}.char-visual{margin:10px 0 calc(10px * 2) 0}.char-visual.text-left{padding-left:10px;padding-right:0}.char-visual.text-right{padding-left:0;padding-right:10px}.char-img{width:40vw;height:40vw;max-width:200px;max-height:200px;box-shadow:0px 2px 8px rgba(0,0,0,0.4)}.swatch-col{width:40vw;height:40vw;max-width:210px;max-height:200px;padding:0}.swatch{width:calc(50% - 8px);max-width:calc(200px - 8px);border:2px #444 solid;box-shadow:0px 2px 8px rgba(0,0,0,0.2);margin:4px;height:33.3vw;max-height:175px;transition:all 0.1s}.swatch:hover{-webkit-filter:brightness(150%) saturate(0.75)}.char-style{width:50%}.app-title{text-transform:uppercase;font-weight:700;font-size:24px;width:60vw;margin:20px auto 20px auto}@media (min-width: 768px){.app-title{font-size:36px}}.buttons{position:absolute;left:50%;bottom:20px;transform:translate(-50%, 0);width:100%}.btn-default{font-size:2vh;font-weight:100;text-transform:uppercase}.title{height:60px;display:inline;margin:0}.title .ui-title{margin:10px 0;width:100%;max-width:100vw;font-size:24px;font-weight:700;text-transform:uppercase}@media (min-width: 768px){.title .ui-title{font-size:36px}}\n", ""]);
 
 // exports
 
@@ -34861,7 +34861,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var title = 'Minimal React Babel';
+var title = 'Create Your Politician';
+var ui = 'The Dream Team';
 
 var App = function (_Component) {
   _inherits(App, _Component);
@@ -34896,6 +34897,8 @@ var App = function (_Component) {
       var _this2 = this;
 
       var hamburger = 'hamburger ' + (this.state.uiActive ? 'active' : null);
+      var character = ['Vladimir Putin', 'Donald Trump', 'Kim Jong-un'];
+      var image = ['./img/putin.jpg', './img/trump.jpg', './img/kim.jpg'];
 
       return _react2.default.createElement(
         'div',
@@ -34921,9 +34924,17 @@ var App = function (_Component) {
               { className: 'col-md-12 text-center' },
               _react2.default.createElement(
                 'p',
-                { className: 'noselect' },
+                { className: 'noselect app-title' },
                 title
-              ),
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'row ui buttons' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-md-12 text-center' },
               _react2.default.createElement(
                 'button',
                 { className: 'btn btn-default', onClick: function onClick(e) {
@@ -34955,21 +34966,105 @@ var App = function (_Component) {
               { className: 'modal-dialog modal-lg', role: 'document' },
               _react2.default.createElement(
                 'div',
-                { className: 'modal-content text-center' },
+                { className: 'modal-content text-center container' },
                 _react2.default.createElement(
-                  'p',
-                  { className: 'noselect' },
-                  this.props.top
+                  'div',
+                  { className: 'row title' },
+                  _react2.default.createElement(
+                    'p',
+                    { className: 'ui-title' },
+                    ui
+                  )
                 ),
                 _react2.default.createElement(
-                  'p',
-                  { className: 'noselect' },
-                  this.props.middle
+                  'div',
+                  { className: 'row char-ui top' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-xs-12 name-col' },
+                    _react2.default.createElement(
+                      'p',
+                      { className: 'char-name' },
+                      character[this.props.top],
+                      ' \u2014 The Brains'
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-xs-6 char-visual text-right' },
+                    _react2.default.createElement('img', { src: image[this.props.top], className: 'img-rounded char-img' })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-xs-6 char-visual text-left swatch-col' },
+                    _react2.default.createElement(
+                      'p',
+                      { className: 'swatch-title text-center' },
+                      'Pick a style:'
+                    ),
+                    _react2.default.createElement('img', { src: './img/color.png', className: 'img-rounded swatch' }),
+                    _react2.default.createElement('img', { src: './img/color.png', className: 'img-rounded swatch' })
+                  )
                 ),
                 _react2.default.createElement(
-                  'p',
-                  { className: 'noselect' },
-                  this.props.bottom
+                  'div',
+                  { className: 'row char-ui' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-xs-12 name-col' },
+                    _react2.default.createElement(
+                      'p',
+                      { className: 'char-name' },
+                      character[this.props.middle],
+                      ' \u2014 The Muscle'
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-xs-6 char-visual text-right' },
+                    _react2.default.createElement('img', { src: image[this.props.middle], className: 'img-rounded char-img' })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-xs-6 char-visual text-left swatch-col' },
+                    _react2.default.createElement(
+                      'p',
+                      { className: 'swatch-title text-center' },
+                      'Pick a style:'
+                    ),
+                    _react2.default.createElement('img', { src: './img/color.png', className: 'img-rounded swatch' }),
+                    _react2.default.createElement('img', { src: './img/color.png', className: 'img-rounded swatch' })
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'row char-ui' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-xs-12 name-col' },
+                    _react2.default.createElement(
+                      'p',
+                      { className: 'char-name' },
+                      character[this.props.bottom],
+                      ' \u2014 The Wild Card'
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-xs-6 char-visual text-right' },
+                    _react2.default.createElement('img', { src: image[this.props.bottom], className: 'img-rounded char-img' })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-xs-6 char-visual text-left swatch-col' },
+                    _react2.default.createElement(
+                      'p',
+                      { className: 'swatch-title text-center' },
+                      'Pick a style:'
+                    ),
+                    _react2.default.createElement('img', { src: './img/color.png', className: 'img-rounded swatch' }),
+                    _react2.default.createElement('img', { src: './img/color.png', className: 'img-rounded swatch' })
+                  )
                 )
               )
             )
